@@ -1,0 +1,21 @@
+package com.project.restaurantly.dto.response.category;
+
+import com.project.restaurantly.Entity.menu.Submenu;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CategoryResponse {
+    long id;
+
+    String name;
+
+    int status;
+}

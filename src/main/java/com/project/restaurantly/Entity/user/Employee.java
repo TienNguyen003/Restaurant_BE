@@ -1,0 +1,31 @@
+package com.project.restaurantly.Entity.user;
+
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    String name;
+    String email;
+    String phone_number;
+    String gender;
+    String image;
+    String birth_date;
+    String joined_date;
+    int shift_id;
+    float vacationTime;
+    int hourOff;
+    int vacationHours;
+    int timekeeping;
+    int lateness;
+}
