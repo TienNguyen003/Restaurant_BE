@@ -38,14 +38,18 @@ public class FavoritesController {
     }
 
     @GetMapping("/by")
-    ApiResponse<FavoritesResponse> getMenu(@RequestParam(name = "id", required = false) long id) {
-        return ApiResponse.<FavoritesResponse>builder()
-                .result(favoriteService.get(id))
+    ApiResponse<List<FavoritesResponse>> getMenu(@RequestParam(name = "id", required = false) long id,
+                                                 @RequestParam int status,
+                                                 @RequestParam int pageNumber,
+                                                 @RequestParam int size) {
+        return ApiResponse.<List<FavoritesResponse>>builder()
+                .result(favoriteService.searchAll(id, pageNumber, size, status))
+                .page(favoriteService.getPagination(pageNumber, size, id, status))
                 .build();
     }
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_EDIT')")
-    @PutMapping()
+    @PutMapping
     ApiResponse<FavoritesResponse> updateMenu(@RequestBody @Valid FavoritesRequest request, @RequestParam long id) {
         return ApiResponse.<FavoritesResponse>builder()
                 .result(favoriteService.update(request, id))
@@ -53,7 +57,7 @@ public class FavoritesController {
     }
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_DELETE')")
-    @DeleteMapping()
+    @DeleteMapping
     ApiResponse<String> delete(@RequestParam(name = "id", required = false) long id) {
         favoriteService.delete(id);
         return ApiResponse.<String>builder()

@@ -1,29 +1,31 @@
-package com.project.restaurantly.Entity.order;
+package com.project.restaurantly.dto.response.products;
 
 import com.project.restaurantly.Entity.products.Product;
-import jakarta.persistence.*;
+import com.project.restaurantly.Entity.user.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Favorites {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ReviewResponse {
     long id;
 
-    long user_id;
+    User user;
 
-    @OneToOne
     Product product;
 
-    LocalDateTime create_at;
+    int parent_review_id;
+
+    int rating;
+
+    String comment;
+
+    LocalDateTime created_at;
 
     int status;
 }

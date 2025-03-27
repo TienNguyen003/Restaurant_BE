@@ -53,6 +53,12 @@ public enum ErrorCode {
 	// category
 	CATEGORY_EXISTED(502, "Danh mục đã tồn tại. Vui lòng chọn mục khác.", HttpStatus.BAD_REQUEST),
 	CATEGORY_NOT_EXISTED(504, "Danh mục không tồn tại. Vui lòng chọn mục khác.", HttpStatus.BAD_REQUEST),
+
+	// favorite, cart
+	CART_PRODUCT_EXISTED(502, "Sản phẩm đã có trong giỏ hàng.", HttpStatus.BAD_REQUEST),
+	CART_PRODUCT_NOT_EXISTED(504, "Sản phẩm không có trong giỏ hàng.", HttpStatus.BAD_REQUEST),
+	FAVORITE_EXISTED(502, "Sản phẩm đã có trong mục yêu thích.", HttpStatus.BAD_REQUEST),
+	FAVORITE_NOT_EXISTED(504, "Sản phẩm không có trong mục yêu thích.", HttpStatus.BAD_REQUEST),
 	;
 
 	ErrorCode(int code, String message, HttpStatusCode statusCode) {

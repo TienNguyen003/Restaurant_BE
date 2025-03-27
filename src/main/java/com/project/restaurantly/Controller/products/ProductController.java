@@ -33,10 +33,12 @@ public class ProductController {
     @GetMapping
     ApiResponse<List<ProductResponse>> searchAll(@RequestParam int pageNumber,
                                                  @RequestParam int size,
-                                                 @RequestParam int status) {
+                                                 @RequestParam int status,
+                                                 @RequestParam(name = "sort", required = false) String sort,
+                                                 @RequestParam(name = "desc", required = false) String desc) {
         return ApiResponse.<List<ProductResponse>>builder()
-                .result(productService.searchAll(pageNumber, size, status))
-                .page(productService.getPagination(pageNumber, size, status))
+                .result(productService.searchAll(pageNumber, size, status, sort, desc))
+                .page(productService.getPagination(pageNumber, size, status, sort, desc))
                 .build();
     }
 

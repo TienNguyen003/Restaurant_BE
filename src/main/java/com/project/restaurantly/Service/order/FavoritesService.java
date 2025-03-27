@@ -2,12 +2,14 @@ package com.project.restaurantly.Service.order;
 
 import com.project.restaurantly.Entity.PageCustom;
 import com.project.restaurantly.Entity.order.Favorites;
+import com.project.restaurantly.Entity.products.Product;
 import com.project.restaurantly.Exception.AppException;
 import com.project.restaurantly.Exception.ErrorCode;
 import com.project.restaurantly.Mapper.order.FavoritesMapper;
 import com.project.restaurantly.dto.request.order.FavoritesRequest;
 import com.project.restaurantly.dto.response.order.FavoritesResponse;
 import com.project.restaurantly.repository.order.FavoritesRepository;
+import com.project.restaurantly.repository.products.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,12 +25,24 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FavoritesService {
     FavoritesRepository favoriteRepository;
+    ProductRepository productRepository;
     FavoritesMapper favoriteMapper;
 
     public FavoritesResponse create(FavoritesRequest request) {
-        Favorites favorites = favoriteMapper.toFavorites(request);
+        Favorites favoritesRequest = favoriteMapper.toFavorites(request);
 
-        return favoriteMapper.toFavoritesResponse(favoriteRepository.save(favorites));
+        Favorites favorites = favoriteRepository.findByUserIdAndProductId(request.getUser_id(), request.getProduct_id());
+        if(favorites != null && favorites.getStatus() == 0){
+            favorites.setStatus(1);
+            return favoriteMapper.toFavoritesResponse(favoriteRepository.save(favorites));
+        }
+
+        Product product = productRepository.findById(request.getProduct_id())
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED));
+
+        favoritesRequest.setProduct(product);
+
+        return favoriteMapper.toFavoritesResponse(favoriteRepository.save(favoritesRequest));
     }
 
     public List<FavoritesResponse> getAll(int status) {
@@ -36,17 +50,17 @@ public class FavoritesService {
         return permission.stream().map(favoriteMapper::toFavoritesResponse).toList();
     }
 
-    public List<FavoritesResponse> searchAll(String name, int pageNumber, int pageSize, int status) {
+    public List<FavoritesResponse> searchAll(long id, int pageNumber, int pageSize, int status) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-        return favoriteRepository.findByName(pageable, status)
+        return favoriteRepository.findByUserId(pageable, status, id)
                 .stream()
                 .map(favoriteMapper::toFavoritesResponse)
                 .toList();
     }
 
-    public PageCustom getPagination(int pageNumber, int size, String name, int status) {
+    public PageCustom getPagination(int pageNumber, int size, long id, int status) {
         Pageable pageable = PageRequest.of(pageNumber - 1, size);
-        Page<Favorites> page = favoriteRepository.findByName(pageable, status);
+        Page<Favorites> page = favoriteRepository.findByUserId(pageable, status, id);
         return PageCustom.builder()
                 .totalPages(String.valueOf(page.getTotalPages()))
                 .totalItems(String.valueOf(page.getTotalElements()))
@@ -55,7 +69,7 @@ public class FavoritesService {
                 .build();
     }
 
-    public FavoritesResponse get(Long id) {
+    public FavoritesResponse get(long id) {
         return favoriteMapper.toFavoritesResponse(favoriteRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED)));
     }

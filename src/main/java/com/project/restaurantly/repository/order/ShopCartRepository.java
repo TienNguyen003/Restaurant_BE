@@ -24,7 +24,6 @@ public interface ShopCartRepository extends JpaRepository<ShopCart, Long> {
 
     @Query("SELECT r FROM ShopCart r WHERE" +
             "(:user_id IS NULL OR r.user_id = :user_id) AND"+
-            "(:product_id IS NULL OR r.product.id = :product_id) AND"+
-            "(:status IS NULL OR r.status = :status)")
-    ShopCart findByUserIdAndProductId(long user_id, long product_id, int status);
+            "(:product_id IS NULL OR r.product.id = :product_id)")
+    ShopCart findByUserIdAndProductId(long user_id, long product_id);
 }

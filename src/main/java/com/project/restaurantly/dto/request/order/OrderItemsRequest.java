@@ -21,7 +21,7 @@ public class OrderItemsRequest {
 
     int quantity;
 
-    LocalDateTime create_at;
+    LocalDateTime create_at = LocalDateTime.now();
 
     int status = 1;
 }

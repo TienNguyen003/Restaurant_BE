@@ -21,7 +21,6 @@ public class FavoritesMapperImpl implements FavoritesMapper {
 
         Favorites.FavoritesBuilder favorites = Favorites.builder();
 
-        favorites.id( request.getId() );
         favorites.user_id( request.getUser_id() );
         favorites.create_at( request.getCreate_at() );
         favorites.status( request.getStatus() );
@@ -52,7 +51,6 @@ public class FavoritesMapperImpl implements FavoritesMapper {
             return;
         }
 
-        favorites.setId( request.getId() );
         favorites.setUser_id( request.getUser_id() );
         favorites.setCreate_at( request.getCreate_at() );
         favorites.setStatus( request.getStatus() );

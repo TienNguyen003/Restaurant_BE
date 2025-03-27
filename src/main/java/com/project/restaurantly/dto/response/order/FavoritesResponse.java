@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class FavoritesResponse {
     long id;
 
-    String user_id;
+    long user_id;
 
     Product product;
 

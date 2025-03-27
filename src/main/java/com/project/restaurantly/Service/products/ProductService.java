@@ -11,6 +11,7 @@ import com.project.restaurantly.repository.products.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,15 +38,18 @@ public class ProductService {
         return productRepository.findAll().stream().map(productMapper::toFoodsRespone).toList();
     }
 
-    public List<ProductResponse> searchAll(int pageNumber, int size, int status) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, size);
+    public List<ProductResponse> searchAll(int pageNumber, int size, int status, String sort, String desc) {
+        Sort sortDirection = (sort != null && !sort.isEmpty())
+                ? Sort.by((desc.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC), sort)
+                : Sort.unsorted();
+        Pageable pageable = PageRequest.of(pageNumber - 1, size, sortDirection);
         return productRepository.findByName(pageable, status)
                 .stream()
                 .map(productMapper::toFoodsRespone)
                 .toList();
     }
 
-    public PageCustom getPagination(int pageNumber, int size, int status) {
+    public PageCustom getPagination(int pageNumber, int size, int status, String sort, String desc) {
         Pageable pageable = PageRequest.of(pageNumber - 1, size);
         Page<Product> page = productRepository.findByName(pageable, status);
         return PageCustom.builder()

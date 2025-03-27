@@ -34,11 +34,16 @@ public class ShopCartService {
         Product product = productRepository.findById(request.getProduct_id())
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED));
 
-        ShopCart cartRequest = cartRepository.findByUserIdAndProductId(request.getUser_id(), request.getProduct_id(), request.getStatus());
-        if(cartRequest == null){
+        ShopCart cartRequest = cartRepository.findByUserIdAndProductId(request.getUser_id(), request.getProduct_id());
+        if (cartRequest == null) {
             cart.setProduct(product);
         } else {
-            cartRequest.setQuantity(cartRequest.getQuantity() + request.getQuantity());
+            if (cartRequest.getStatus() == 0) {
+                cartRequest.setQuantity(request.getQuantity());
+                cartRequest.setStatus(1);
+            } else {
+                cartRequest.setQuantity(cartRequest.getQuantity() + request.getQuantity());
+            }
             return cartMapper.toCartResponse(cartRepository.save(cartRequest));
         }
 
@@ -71,7 +76,7 @@ public class ShopCartService {
 
     public ShopCartResponse update(ShopCartRequest request, long id) {
         ShopCart cart = cartRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(ErrorCode.CART_PRODUCT_NOT_EXISTED));
 
         cartMapper.updateCart(cart, request);
 
@@ -80,7 +85,7 @@ public class ShopCartService {
 
     public ShopCartResponse updateQuantity(int quantity, long id) {
         ShopCart cart = cartRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(ErrorCode.CART_PRODUCT_NOT_EXISTED));
 
         cart.setQuantity(quantity);
 
