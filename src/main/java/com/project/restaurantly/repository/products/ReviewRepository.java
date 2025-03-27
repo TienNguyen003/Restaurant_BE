@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends JpaRepository<ReviewProduct, Long> {
     @Query("SELECT r FROM ReviewProduct r WHERE" +
             "(:product_id IS NULL OR r.product.id = :product_id) AND" +
-            "(:status IS NULL OR r.status = :status)")
+            "(:status IS NULL OR r.status = :status)"+
+            "ORDER BY r.created_at DESC")
     Page<ReviewProduct> findByProductId(Pageable pageable, int status, long product_id);
 
     @Query("SELECT SUM(r.rating), COUNT(r) FROM ReviewProduct r WHERE" +

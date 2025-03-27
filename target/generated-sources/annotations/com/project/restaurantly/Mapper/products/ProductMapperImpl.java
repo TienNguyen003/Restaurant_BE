@@ -27,6 +27,9 @@ public class ProductMapperImpl implements ProductMapper {
         product.price( request.getPrice() );
         product.discount_price( request.getDiscount_price() );
         product.discount_percentage( request.getDiscount_percentage() );
+        product.quantity( request.getQuantity() );
+        product.detail_des( request.getDetail_des() );
+        product.info( request.getInfo() );
         product.des( request.getDes() );
         product.category( request.getCategory() );
         product.status( request.getStatus() );
@@ -49,6 +52,9 @@ public class ProductMapperImpl implements ProductMapper {
         productResponse.price( menu.getPrice() );
         productResponse.discount_price( menu.getDiscount_price() );
         productResponse.discount_percentage( menu.getDiscount_percentage() );
+        productResponse.quantity( menu.getQuantity() );
+        productResponse.detail_des( menu.getDetail_des() );
+        productResponse.info( menu.getInfo() );
         productResponse.des( menu.getDes() );
         productResponse.category( menu.getCategory() );
         productResponse.status( menu.getStatus() );
@@ -68,6 +74,9 @@ public class ProductMapperImpl implements ProductMapper {
         menu.setPrice( request.getPrice() );
         menu.setDiscount_price( request.getDiscount_price() );
         menu.setDiscount_percentage( request.getDiscount_percentage() );
+        menu.setQuantity( request.getQuantity() );
+        menu.setDetail_des( request.getDetail_des() );
+        menu.setInfo( request.getInfo() );
         menu.setDes( request.getDes() );
         menu.setCategory( request.getCategory() );
         menu.setStatus( request.getStatus() );

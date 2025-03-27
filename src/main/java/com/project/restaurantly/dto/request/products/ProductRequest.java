@@ -21,6 +21,12 @@ public class ProductRequest {
 
     int discount_percentage;
 
+    int quantity;
+
+    String detail_des;
+
+    String info;
+
     String des;
 
     String category;

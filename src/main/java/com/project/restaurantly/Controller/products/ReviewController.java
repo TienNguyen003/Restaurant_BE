@@ -72,6 +72,7 @@ public class ReviewController {
     @DeleteMapping()
     ApiResponse<String> delete(@RequestParam long id) {
         reviewService.delete(id);
+        messagingTemplate.convertAndSend("/topic/review-delete", "tien");
         return ApiResponse.<String>builder()
                 .result("Review has been deleted")
                 .build();

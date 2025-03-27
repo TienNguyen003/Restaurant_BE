@@ -32,8 +32,8 @@ public class FavoritesService {
         Favorites favoritesRequest = favoriteMapper.toFavorites(request);
 
         Favorites favorites = favoriteRepository.findByUserIdAndProductId(request.getUser_id(), request.getProduct_id());
-        if(favorites != null && favorites.getStatus() == 0){
-            favorites.setStatus(1);
+        if(favorites != null){
+            if(favorites.getStatus() == 0) favorites.setStatus(1);
             return favoriteMapper.toFavoritesResponse(favoriteRepository.save(favorites));
         }
 
