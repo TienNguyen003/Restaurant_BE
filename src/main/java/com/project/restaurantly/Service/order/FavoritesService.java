@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,8 +51,11 @@ public class FavoritesService {
         return permission.stream().map(favoriteMapper::toFavoritesResponse).toList();
     }
 
-    public List<FavoritesResponse> searchAll(long id, int pageNumber, int pageSize, int status) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+    public List<FavoritesResponse> searchAll(long id, int pageNumber, int pageSize, int status, String sort, String desc) {
+        Sort sortDirection = (sort != null && !sort.isEmpty())
+                ? Sort.by((desc.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC), sort)
+                : Sort.unsorted();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortDirection);
         return favoriteRepository.findByUserId(pageable, status, id)
                 .stream()
                 .map(favoriteMapper::toFavoritesResponse)

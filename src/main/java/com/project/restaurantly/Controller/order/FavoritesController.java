@@ -29,7 +29,7 @@ public class FavoritesController {
                 .build();
     }
 
-//    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
+    //    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
     @GetMapping("/get")
     ApiResponse<List<FavoritesResponse>> getAll(int status) {
         return ApiResponse.<List<FavoritesResponse>>builder()
@@ -38,12 +38,13 @@ public class FavoritesController {
     }
 
     @GetMapping("/by")
-    ApiResponse<List<FavoritesResponse>> getMenu(@RequestParam(name = "id", required = false) long id,
-                                                 @RequestParam int status,
+    ApiResponse<List<FavoritesResponse>> getMenu(@RequestParam int status,
                                                  @RequestParam int pageNumber,
-                                                 @RequestParam int size) {
+                                                 @RequestParam int size, @RequestParam(name = "id", required = false) long id,
+                                                 @RequestParam(name = "sort", required = false) String sort,
+                                                 @RequestParam(name = "desc", required = false) String desc) {
         return ApiResponse.<List<FavoritesResponse>>builder()
-                .result(favoriteService.searchAll(id, pageNumber, size, status))
+                .result(favoriteService.searchAll(id, pageNumber, size, status, sort, desc))
                 .page(favoriteService.getPagination(pageNumber, size, id, status))
                 .build();
     }
