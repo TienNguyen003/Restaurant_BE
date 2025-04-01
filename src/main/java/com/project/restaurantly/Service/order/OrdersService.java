@@ -31,6 +31,18 @@ public class OrdersService {
         return orderMapper.toOrdersResponse(ordersRepository.save(orders));
     }
 
+//    public List<OrdersResponse> create(List<OrdersRequest> requests) {
+//        List<Orders> ordersList = requests.stream()
+//                .map(orderMapper::toOrders)
+//                .collect(Collectors.toList());
+//
+//        List<Orders> savedOrders = ordersRepository.saveAll(ordersList);
+//
+//        return savedOrders.stream()
+//                .map(orderMapper::toOrdersResponse)
+//                .collect(Collectors.toList());
+//    }
+
     public List<OrdersResponse> getAll(int status) {
         var permission = ordersRepository.findByStt(status);
         return permission.stream().map(orderMapper::toOrdersResponse).toList();

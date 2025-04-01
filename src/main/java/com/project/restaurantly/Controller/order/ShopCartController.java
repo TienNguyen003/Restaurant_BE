@@ -38,12 +38,14 @@ public class ShopCartController {
     }
 
     @GetMapping("/by")
-    ApiResponse<List<ShopCartResponse>> getMenu(@RequestParam(name = "id", required = false) long id,
-                                                @RequestParam int status,
+    ApiResponse<List<ShopCartResponse>> getMenu(@RequestParam int status,
                                                 @RequestParam int pageNumber,
-                                                @RequestParam int size) {
+                                                @RequestParam int size,
+                                                @RequestParam(name = "id", required = false) long id,
+                                                @RequestParam(name = "sort", required = false) String sort,
+                                                @RequestParam(name = "desc", required = false) String desc) {
         return ApiResponse.<List<ShopCartResponse>>builder()
-                .result(cartService.searchAll(id, pageNumber, size, status))
+                .result(cartService.searchAll(id, pageNumber, size, status, sort, desc))
                 .page(cartService.getPagination(pageNumber, size, id, status))
                 .build();
     }

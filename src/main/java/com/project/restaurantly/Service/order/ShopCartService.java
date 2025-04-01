@@ -16,6 +16,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,8 +56,11 @@ public class ShopCartService {
         return permission.stream().map(cartMapper::toCartResponse).toList();
     }
 
-    public List<ShopCartResponse> searchAll(long id, int pageNumber, int pageSize, int status) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+    public List<ShopCartResponse> searchAll(long id, int pageNumber, int pageSize, int status, String sort, String desc) {
+        Sort sortDirection = (sort != null && !sort.isEmpty())
+                ? Sort.by((desc.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC), sort)
+                : Sort.unsorted();
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sortDirection);
         return cartRepository.findByName(id, pageable, status)
                 .stream()
                 .map(cartMapper::toCartResponse)
