@@ -26,7 +26,7 @@ public class OrderItems {
     @JoinColumn(nullable = true)
     OrderTables ordersTables;
 
-    @OneToOne
+    @ManyToOne
     Product product;
 
     int quantity;

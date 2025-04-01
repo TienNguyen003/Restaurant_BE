@@ -1,6 +1,5 @@
 package com.project.restaurantly.dto.request.order;
 
-import com.project.restaurantly.Entity.products.Product;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,7 +16,7 @@ public class OrderItemsRequest {
 
     long ordersTables_id;
 
-    Product product;
+    long product_id;
 
     int quantity;
 

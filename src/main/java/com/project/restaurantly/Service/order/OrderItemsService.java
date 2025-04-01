@@ -8,6 +8,8 @@ import com.project.restaurantly.Mapper.order.OrderItemsMapper;
 import com.project.restaurantly.dto.request.order.OrderItemsRequest;
 import com.project.restaurantly.dto.response.order.OrderItemsResponse;
 import com.project.restaurantly.repository.order.OrderItemsRepository;
+import com.project.restaurantly.repository.order.OrdersRepository;
+import com.project.restaurantly.repository.products.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,12 +19,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrderItemsService {
     OrderItemsRepository itemRepository;
+    OrdersRepository ordersRepository;
+    ProductRepository productRepository;
     OrderItemsMapper itemMapper;
 
     public OrderItemsResponse create(OrderItemsRequest request) {
@@ -31,9 +36,25 @@ public class OrderItemsService {
         return itemMapper.toOrderItemsResponse(itemRepository.save(orderItems));
     }
 
-    public List<OrderItemsResponse> getAll(int status) {
-        var permission = itemRepository.findByStt(status);
-        return permission.stream().map(itemMapper::toOrderItemsResponse).toList();
+    public List<OrderItemsResponse> createList(List<OrderItemsRequest> requests, long orders_id) {
+        List<OrderItems> ordersList = requests.stream()
+                .map(request -> {
+                    OrderItems order = itemMapper.toOrderItems(request);
+                    order.setProduct(productRepository.findById(request.getProduct_id()).orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED)));
+                    order.setOrders(ordersRepository.findById(orders_id).orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED)));
+                    return order;
+                })
+                .collect(Collectors.toList());
+
+        List<OrderItems> savedOrders = itemRepository.saveAll(ordersList);
+
+        return savedOrders.stream()
+                .map(itemMapper::toOrderItemsResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderItemsResponse> getAll(long id) {
+        return itemRepository.findByStt(id).stream().map(itemMapper::toOrderItemsResponse).toList();
     }
 
     public List<OrderItemsResponse> searchAll(String name, int pageNumber, int pageSize, int status) {

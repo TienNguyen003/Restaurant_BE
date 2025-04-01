@@ -31,9 +31,9 @@ public class OrdersController {
 
 //    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
     @GetMapping("/get")
-    ApiResponse<List<OrdersResponse>> getAll(int status) {
+    ApiResponse<List<OrdersResponse>> getAll(long id) {
         return ApiResponse.<List<OrdersResponse>>builder()
-                .result(orderService.getAll(status))
+                .result(orderService.getAll(id))
                 .build();
     }
 

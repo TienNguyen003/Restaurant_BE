@@ -23,17 +23,17 @@ public class OrderItemController {
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_ADD')")
     @PostMapping
-    ApiResponse<OrderItemsResponse> create(@RequestBody @Valid OrderItemsRequest request) {
-        return ApiResponse.<OrderItemsResponse>builder()
-                .result(orderService.create(request))
+    ApiResponse<List<OrderItemsResponse>> create(@RequestBody List<OrderItemsRequest> request, long order_id) {
+        return ApiResponse.<List<OrderItemsResponse>>builder()
+                .result(orderService.createList(request, order_id))
                 .build();
     }
 
 //    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
     @GetMapping("/get")
-    ApiResponse<List<OrderItemsResponse>> getAll(int status) {
+    ApiResponse<List<OrderItemsResponse>> getAll(@RequestParam long order_id) {
         return ApiResponse.<List<OrderItemsResponse>>builder()
-                .result(orderService.getAll(status))
+                .result(orderService.getAll(order_id))
                 .build();
     }
 

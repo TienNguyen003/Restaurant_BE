@@ -23,6 +23,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class OrdersService {
     OrdersRepository ordersRepository;
+    OrderItemsService orderItemsService;
     OrdersMapper orderMapper;
 
     public OrdersResponse create(OrdersRequest request) {
@@ -31,20 +32,8 @@ public class OrdersService {
         return orderMapper.toOrdersResponse(ordersRepository.save(orders));
     }
 
-//    public List<OrdersResponse> create(List<OrdersRequest> requests) {
-//        List<Orders> ordersList = requests.stream()
-//                .map(orderMapper::toOrders)
-//                .collect(Collectors.toList());
-//
-//        List<Orders> savedOrders = ordersRepository.saveAll(ordersList);
-//
-//        return savedOrders.stream()
-//                .map(orderMapper::toOrdersResponse)
-//                .collect(Collectors.toList());
-//    }
-
-    public List<OrdersResponse> getAll(int status) {
-        var permission = ordersRepository.findByStt(status);
+    public List<OrdersResponse> getAll(long id) {
+        var permission = ordersRepository.findByStt(id);
         return permission.stream().map(orderMapper::toOrdersResponse).toList();
     }
 

@@ -17,7 +17,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             (Pageable pageable, int status);
 
     @Query("SELECT r FROM Orders r WHERE" +
-            "(:status IS NULL OR r.status = :status)")
+            "(:id IS NULL OR r.id = :id)")
     List<Orders> findByStt
-            (int status);
+            (long id);
 }

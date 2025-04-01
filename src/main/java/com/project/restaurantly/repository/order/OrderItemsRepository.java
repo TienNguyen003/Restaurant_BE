@@ -17,7 +17,7 @@ public interface OrderItemsRepository extends JpaRepository<OrderItems, Long> {
             (Pageable pageable, int status);
 
     @Query("SELECT r FROM OrderItems r WHERE" +
-            "(:status IS NULL OR r.status = :status)")
+            "(:orders_id IS NULL OR r.orders.id = :orders_id)")
     List<OrderItems> findByStt
-            (int status);
+            (long orders_id);
 }

@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class OrderItemsResponse {
     long id;
 
-    OrdersResponse orders;
+    long orders_id;
 
-    OrderTablesResponse ordersTables;
+    long ordersTables_id;
 
     Product product;
 
