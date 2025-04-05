@@ -74,6 +74,10 @@ public class PaymentMapperImpl implements PaymentMapper {
         ordersResponse.id( orders.getId() );
         ordersResponse.user_id( orders.getUser_id() );
         ordersResponse.total_amount( orders.getTotal_amount() );
+        ordersResponse.fee( orders.getFee() );
+        ordersResponse.phone_number( orders.getPhone_number() );
+        ordersResponse.name( orders.getName() );
+        ordersResponse.address( orders.getAddress() );
         ordersResponse.state( orders.getState() );
         ordersResponse.create_at( orders.getCreate_at() );
         ordersResponse.update_at( orders.getUpdate_at() );

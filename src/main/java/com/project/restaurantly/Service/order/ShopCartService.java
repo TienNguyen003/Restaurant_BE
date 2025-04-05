@@ -96,10 +96,15 @@ public class ShopCartService {
         return cartMapper.toCartResponse(cartRepository.save(cart));
     }
 
-    public void delete(long id) {
-        ShopCart cart = cartRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
-        cart.setStatus(0);
-        cartRepository.save(cart);
+    public void delete(List<Long> ids) {
+        List<ShopCart> carts = cartRepository.findAllById(ids);
+        if (carts.isEmpty()) {
+            throw new AppException(ErrorCode.MENU_NOT_EXISTED);
+        }
+
+        for (ShopCart cart : carts) {
+            cart.setStatus(0);
+        }
+        cartRepository.saveAll(carts);
     }
 }

@@ -67,8 +67,8 @@ public class ShopCartController {
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_DELETE')")
     @DeleteMapping
-    ApiResponse<String> delete(@RequestParam long id) {
-        cartService.delete(id);
+    ApiResponse<String> delete(@RequestParam List<Long> ids) {
+        cartService.delete(ids);
         return ApiResponse.<String>builder()
                 .result("Shop cart has been deleted")
                 .build();

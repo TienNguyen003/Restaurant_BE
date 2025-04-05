@@ -23,6 +23,9 @@ public class OrdersMapperImpl implements OrdersMapper {
 
         orders.user_id( request.getUser_id() );
         orders.total_amount( request.getTotal_amount() );
+        orders.phone_number( request.getPhone_number() );
+        orders.name( request.getName() );
+        orders.address( request.getAddress() );
         orders.state( request.getState() );
         orders.create_at( request.getCreate_at() );
         orders.update_at( request.getUpdate_at() );
@@ -42,6 +45,10 @@ public class OrdersMapperImpl implements OrdersMapper {
         ordersResponse.id( orders.getId() );
         ordersResponse.user_id( orders.getUser_id() );
         ordersResponse.total_amount( orders.getTotal_amount() );
+        ordersResponse.fee( orders.getFee() );
+        ordersResponse.phone_number( orders.getPhone_number() );
+        ordersResponse.name( orders.getName() );
+        ordersResponse.address( orders.getAddress() );
         ordersResponse.state( orders.getState() );
         ordersResponse.create_at( orders.getCreate_at() );
         ordersResponse.update_at( orders.getUpdate_at() );
@@ -58,6 +65,9 @@ public class OrdersMapperImpl implements OrdersMapper {
 
         orders.setUser_id( request.getUser_id() );
         orders.setTotal_amount( request.getTotal_amount() );
+        orders.setPhone_number( request.getPhone_number() );
+        orders.setName( request.getName() );
+        orders.setAddress( request.getAddress() );
         orders.setState( request.getState() );
         orders.setCreate_at( request.getCreate_at() );
         orders.setUpdate_at( request.getUpdate_at() );

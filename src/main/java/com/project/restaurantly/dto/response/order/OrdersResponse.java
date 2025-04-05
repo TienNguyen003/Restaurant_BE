@@ -17,6 +17,14 @@ public class OrdersResponse {
 
     float total_amount;
 
+    float fee;
+
+    String phone_number;
+
+    String name;
+
+    String address;
+
     String state;
 
     LocalDateTime create_at;

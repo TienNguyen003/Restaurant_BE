@@ -29,18 +29,24 @@ public class OrdersController {
                 .build();
     }
 
-//    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
+    //    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
     @GetMapping("/get")
-    ApiResponse<List<OrdersResponse>> getAll(long id) {
-        return ApiResponse.<List<OrdersResponse>>builder()
+    ApiResponse<OrdersResponse> getAll(long id) {
+        return ApiResponse.<OrdersResponse>builder()
                 .result(orderService.getAll(id))
                 .build();
     }
 
     @GetMapping("/by")
-    ApiResponse<OrdersResponse> getMenu(@RequestParam(name = "id", required = false) long id) {
-        return ApiResponse.<OrdersResponse>builder()
-                .result(orderService.get(id))
+    ApiResponse<List<OrdersResponse>> getMenu(@RequestParam(name = "user_id", required = false) String user_id,
+                                        @RequestParam(name = "sort", required = false) String sort,
+                                        @RequestParam(name = "desc", required = false) String desc,
+                                        @RequestParam int status,
+                                        @RequestParam int pageNumber,
+                                        @RequestParam int size) {
+        return ApiResponse.<List<OrdersResponse>>builder()
+                .result(orderService.searchAll(user_id, status, pageNumber, size, sort, desc))
+                .page(orderService.getPagination(pageNumber, size, user_id, status))
                 .build();
     }
 

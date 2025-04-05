@@ -18,6 +18,12 @@ public class OrdersRequest {
 
     String state;
 
+    String phone_number;
+
+    String name;
+
+    String address;
+
     LocalDateTime create_at;
 
     LocalDateTime update_at;
