@@ -32,6 +32,9 @@ public class ShopCartService {
     public ShopCartResponse create(ShopCartRequest request) {
         ShopCart cart = cartMapper.toCart(request);
 
+        int countProduct = cartRepository.totalCartByUerId(request.getUser_id(), 1);
+        if(countProduct >= 100) throw new AppException(ErrorCode.MAX_PRODUCT_LIMIT, 100);
+
         Product product = productRepository.findById(request.getProduct_id())
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED));
 

@@ -59,6 +59,7 @@ public enum ErrorCode {
 	CART_PRODUCT_NOT_EXISTED(504, "Sản phẩm không có trong giỏ hàng.", HttpStatus.BAD_REQUEST),
 	FAVORITE_EXISTED(502, "Sản phẩm đã có trong mục yêu thích.", HttpStatus.BAD_REQUEST),
 	FAVORITE_NOT_EXISTED(504, "Sản phẩm không có trong mục yêu thích.", HttpStatus.BAD_REQUEST),
+	MAX_PRODUCT_LIMIT(504, "Sản phẩm trong giỏ hàng không được vượt quá %d.", HttpStatus.BAD_REQUEST),
 	;
 
 	ErrorCode(int code, String message, HttpStatusCode statusCode) {
