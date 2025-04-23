@@ -35,5 +35,7 @@ public class DiscountCodesResponse {
 
     int min_price;
 
+    int max_discount;
+
     String description;
 }

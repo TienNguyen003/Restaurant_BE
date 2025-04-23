@@ -1,4 +1,4 @@
-package com.project.restaurantly.Entity.products;
+package com.project.restaurantly.Entity.chat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,34 +15,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DiscountCodes {
+public class ChatMessages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String title;
+    long chatId;
 
-    String code;
+    long senderId;
 
-    int discount_value;
+    String messageText;
 
-    String discount_type;
+    LocalDateTime sentAt;
 
-    String discount_category;
+    LocalDateTime updatedAt;
 
-    LocalDateTime start_date;
+    int chatType;
 
-    LocalDateTime end_date;
-
-    int is_active;
-
-    int usage_limit;
-
-    int used_count;
-
-    int min_price;
-
-    int max_discount;
-
-    String description;
+    int status;
 }

@@ -33,5 +33,7 @@ public class DiscountCodesRequest {
 
     int min_price;
 
+    int max_discount;
+
     String description;
 }

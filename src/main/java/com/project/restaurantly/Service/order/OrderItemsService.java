@@ -2,6 +2,8 @@ package com.project.restaurantly.Service.order;
 
 import com.project.restaurantly.Entity.PageCustom;
 import com.project.restaurantly.Entity.order.OrderItems;
+import com.project.restaurantly.Entity.order.Orders;
+import com.project.restaurantly.Entity.products.Product;
 import com.project.restaurantly.Exception.AppException;
 import com.project.restaurantly.Exception.ErrorCode;
 import com.project.restaurantly.Mapper.order.OrderItemsMapper;
@@ -90,10 +92,16 @@ public class OrderItemsService {
         return itemMapper.toOrderItemsResponse(itemRepository.save(orderItems));
     }
 
-    public void delete(Long id) {
+    public void delete(long id) {
         OrderItems orderItems = itemRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
-        orderItems.setStatus(0);
-        itemRepository.save(orderItems);
+        Product product = productRepository.findById(orderItems.getProduct().getId())
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCTS_FOOD_NOT_EXISTED));
+        Orders orders = ordersRepository.findById(orderItems.getOrders().getId())
+                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
+        orders.setTotal_amount(orders.getTotal_amount() - (orderItems.getQuantity() * product.getDiscount_price()));
+
+        ordersRepository.save(orders);
+        itemRepository.delete(orderItems);
     }
 }

@@ -72,7 +72,6 @@ public class OrdersService {
     public void delete(long id) {
         Orders orders = ordersRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
-        orders.setStatus(0);
-        ordersRepository.save(orders);
+        ordersRepository.delete(orders);
     }
 }

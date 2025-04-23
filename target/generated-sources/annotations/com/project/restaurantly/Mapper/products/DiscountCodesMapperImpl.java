@@ -32,6 +32,7 @@ public class DiscountCodesMapperImpl implements DiscountCodesMapper {
         discountCodes.usage_limit( request.getUsage_limit() );
         discountCodes.used_count( request.getUsed_count() );
         discountCodes.min_price( request.getMin_price() );
+        discountCodes.max_discount( request.getMax_discount() );
         discountCodes.description( request.getDescription() );
 
         return discountCodes.build();
@@ -57,6 +58,7 @@ public class DiscountCodesMapperImpl implements DiscountCodesMapper {
         discountCodesResponse.usage_limit( discountCodes.getUsage_limit() );
         discountCodesResponse.used_count( discountCodes.getUsed_count() );
         discountCodesResponse.min_price( discountCodes.getMin_price() );
+        discountCodesResponse.max_discount( discountCodes.getMax_discount() );
         discountCodesResponse.description( discountCodes.getDescription() );
 
         return discountCodesResponse.build();
@@ -79,6 +81,7 @@ public class DiscountCodesMapperImpl implements DiscountCodesMapper {
         discountCodes.setUsage_limit( request.getUsage_limit() );
         discountCodes.setUsed_count( request.getUsed_count() );
         discountCodes.setMin_price( request.getMin_price() );
+        discountCodes.setMax_discount( request.getMax_discount() );
         discountCodes.setDescription( request.getDescription() );
     }
 }

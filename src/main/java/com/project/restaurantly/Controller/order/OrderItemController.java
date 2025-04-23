@@ -54,7 +54,7 @@ public class OrderItemController {
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_DELETE')")
     @DeleteMapping()
-    ApiResponse<String> delete(@RequestParam(name = "id", required = false) long id) {
+    ApiResponse<String> delete(@RequestParam long id) {
         orderService.delete(id);
         return ApiResponse.<String>builder()
                 .result("Order item has been deleted")
