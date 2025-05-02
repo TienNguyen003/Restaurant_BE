@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ChatMessagesRequest {
     long chatId;
 
-    long senderId;
+    String senderId;
 
     String messageText;
 

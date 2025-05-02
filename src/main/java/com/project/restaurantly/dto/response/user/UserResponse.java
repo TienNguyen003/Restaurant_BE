@@ -5,8 +5,6 @@ import com.project.restaurantly.dto.response.role.RoleResponse;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,8 +12,12 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse  {
     String id;
+
     String username;
+
     Employee employee;
+
     RoleResponse role;
+
     int status;
 }

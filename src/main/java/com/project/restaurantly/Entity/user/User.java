@@ -1,5 +1,6 @@
 package com.project.restaurantly.Entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.restaurantly.Entity.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,8 +17,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	String id;
+
 	String username;
+
+	@JsonIgnore
 	String password;
+
 	int status;
 
 	@OneToOne

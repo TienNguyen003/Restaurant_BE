@@ -22,7 +22,7 @@ public class ChatMessages {
 
     long chatId;
 
-    long senderId;
+    String senderId;
 
     String messageText;
 

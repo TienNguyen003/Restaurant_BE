@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PrivateChatsRequest {
-    long userOneId;
+    String userOneId;
 
-    long userTwoId;
+    String userTwoId;
 
     LocalDateTime createdAt;
 

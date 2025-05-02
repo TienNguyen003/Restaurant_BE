@@ -1,9 +1,7 @@
 package com.project.restaurantly.Entity.chat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.project.restaurantly.Entity.user.User;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,9 +18,11 @@ public class PrivateChats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    long userOneId;
+    @ManyToOne
+    User userOneId;
 
-    long userTwoId;
+    @ManyToOne
+    User userTwoId;
 
     LocalDateTime createdAt;
 

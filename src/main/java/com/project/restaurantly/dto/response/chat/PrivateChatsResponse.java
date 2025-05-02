@@ -1,5 +1,6 @@
 package com.project.restaurantly.dto.response.chat;
 
+import com.project.restaurantly.Entity.user.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,9 +14,9 @@ import java.time.LocalDateTime;
 public class PrivateChatsResponse {
     long id;
 
-    long userOneId;
+    User userOneId;
 
-    long userTwoId;
+    User userTwoId;
 
     LocalDateTime createdAt;
 
