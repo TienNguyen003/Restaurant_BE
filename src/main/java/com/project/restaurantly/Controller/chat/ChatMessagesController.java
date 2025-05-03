@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,15 @@ import java.util.List;
 @Slf4j
 public class ChatMessagesController {
     ChatMessagesService chatService;
+    SimpMessagingTemplate messagingTemplate;
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_ADD')")
     @PostMapping
-    ApiResponse<ChatMessagesResponse> create(@RequestBody @Valid ChatMessagesRequest request) {
-        return ApiResponse.<ChatMessagesResponse>builder()
-                .result(chatService.create(request))
+    ApiResponse<String> create(@RequestBody @Valid ChatMessagesRequest request) {
+        chatService.create(request);
+        messagingTemplate.convertAndSend("/topic/send-chat", "tien");
+        return ApiResponse.<String>builder()
+                .result("Success")
                 .build();
     }
 
