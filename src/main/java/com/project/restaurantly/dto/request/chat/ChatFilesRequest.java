@@ -21,7 +21,7 @@ public class ChatFilesRequest {
 
     LocalDateTime uploadedAt;
 
-    long uploadedBy;
+    String uploadedBy;
 
     int chatType;
 

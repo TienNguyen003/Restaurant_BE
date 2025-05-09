@@ -21,4 +21,10 @@ public interface ChatFilesRepository extends JpaRepository<ChatFiles, Long> {
             "(:status IS NULL OR r.status = :status)")
     List<ChatFiles> findByStt
             (int status);
+
+    @Query("SELECT r FROM ChatFiles r WHERE" +
+            "(:chatId IS NULL OR r.chatId = :chatId) AND" +
+            "(:status IS NULL OR r.status = :status)")
+    List<ChatFiles> findByChatId
+            (long chatId, int status);
 }

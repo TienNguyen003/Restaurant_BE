@@ -30,7 +30,7 @@ public class ChatFilesResponse {
 
     LocalDateTime uploadedAt;
 
-    long uploadedBy;
+    String uploadedBy;
 
     int chatType;
 

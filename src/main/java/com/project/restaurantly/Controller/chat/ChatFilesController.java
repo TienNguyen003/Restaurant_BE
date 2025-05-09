@@ -38,9 +38,9 @@ public class ChatFilesController {
     }
 
     @GetMapping("/by")
-    ApiResponse<ChatFilesResponse> getMenu(@RequestParam(name = "id", required = false) long id) {
-        return ApiResponse.<ChatFilesResponse>builder()
-                .result(chatService.get(id))
+    ApiResponse<List<ChatFilesResponse>> getMenu(@RequestParam long chatId, @RequestParam int status) {
+        return ApiResponse.<List<ChatFilesResponse>>builder()
+                .result(chatService.get(chatId, status))
                 .build();
     }
 

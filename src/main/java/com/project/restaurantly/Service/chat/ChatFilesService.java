@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,9 +54,8 @@ public class ChatFilesService {
 //                .build();
 //    }
 
-    public ChatFilesResponse get(long id) {
-        return chatMapper.toChatFilesResponse(chatRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED)));
+    public List<ChatFilesResponse> get(long chatId, int status) {
+        return chatRepository.findByChatId(chatId, status).stream().map(chatMapper::toChatFilesResponse).collect(Collectors.toList());
     }
 
     public ChatFilesResponse update(ChatFilesRequest request, long id) {
