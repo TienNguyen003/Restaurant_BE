@@ -17,8 +17,10 @@ public interface PrivateChatsRepository extends JpaRepository<PrivateChats, Long
 //    Page<Menu> findByName
 //            (String name, Pageable pageable, int status);
 //
+
     @Query("SELECT r FROM PrivateChats r WHERE" +
+            "(:userId IS NULL OR r.userOneId.id = :userId OR r.userTwoId.id = :userId) AND " +
             "(:status IS NULL OR r.status = :status)")
-    List<PrivateChats> findByStt
-            (int status);
+    List<PrivateChats> findByUserId
+            (String userId, int status);
 }

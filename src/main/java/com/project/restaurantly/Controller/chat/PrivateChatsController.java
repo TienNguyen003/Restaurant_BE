@@ -19,28 +19,28 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class PrivateChatsController {
-    PrivateChatsService categoryService;
+    PrivateChatsService chatService;
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_ADD')")
     @PostMapping
     ApiResponse<PrivateChatsResponse> create(@RequestBody @Valid PrivateChatsRequest request) {
         return ApiResponse.<PrivateChatsResponse>builder()
-                .result(categoryService.create(request))
+                .result(chatService.create(request))
                 .build();
     }
 
 //    @PreAuthorize("@requiredPermission.checkPermission('PERM_VIEW')")
     @GetMapping("/get")
-    ApiResponse<List<PrivateChatsResponse>> getAll(@RequestParam int status) {
-        return ApiResponse.<List<PrivateChatsResponse>>builder()
-                .result(categoryService.getAll(status))
+    ApiResponse<PrivateChatsResponse> getAll(@RequestParam long chatId) {
+        return ApiResponse.<PrivateChatsResponse>builder()
+                .result(chatService.getByChatId(chatId))
                 .build();
     }
 
     @GetMapping("/by")
-    ApiResponse<PrivateChatsResponse> getMenu(@RequestParam(name = "id", required = false) long id) {
-        return ApiResponse.<PrivateChatsResponse>builder()
-                .result(categoryService.get(id))
+    ApiResponse<List<PrivateChatsResponse>> getMenu(@RequestParam int status, @RequestParam String idUser) {
+        return ApiResponse.<List<PrivateChatsResponse>>builder()
+                .result(chatService.get(idUser, status))
                 .build();
     }
 
@@ -48,14 +48,14 @@ public class PrivateChatsController {
     @PutMapping()
     ApiResponse<PrivateChatsResponse> updateMenu(@RequestBody @Valid PrivateChatsRequest request, @RequestParam long id) {
         return ApiResponse.<PrivateChatsResponse>builder()
-                .result(categoryService.update(request, id))
+                .result(chatService.update(request, id))
                 .build();
     }
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_DELETE')")
     @DeleteMapping
     ApiResponse<String> delete(@RequestParam(name = "id", required = false) long id) {
-        categoryService.delete(id);
+        chatService.delete(id);
         return ApiResponse.<String>builder()
                 .result("Private chat has been deleted")
                 .build();

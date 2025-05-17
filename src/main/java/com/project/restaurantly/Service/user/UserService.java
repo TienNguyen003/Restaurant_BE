@@ -114,7 +114,7 @@ public class UserService {
 		employeeRepository.deleteById(user.getEmployee().getId());
 	}
 
-	@PostAuthorize("returnObject.id == authentication.principal.getClaimAsString('id') or !hasRole('NHÂN')")
+//	@PostAuthorize("returnObject.id == authentication.principal.getClaimAsString('id') or !hasRole('NHÂN')")
 	public UserResponse getInfo(){
 		var context = SecurityContextHolder.getContext();
 		String name = context.getAuthentication().getName();

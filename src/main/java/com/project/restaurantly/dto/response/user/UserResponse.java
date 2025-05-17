@@ -19,5 +19,7 @@ public class UserResponse  {
 
     RoleResponse role;
 
+    String urlImage;
+
     int status;
 }

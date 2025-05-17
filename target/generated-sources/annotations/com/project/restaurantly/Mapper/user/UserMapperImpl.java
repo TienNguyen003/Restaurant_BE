@@ -47,6 +47,7 @@ public class UserMapperImpl implements UserMapper {
         userResponse.username( user.getUsername() );
         userResponse.employee( user.getEmployee() );
         userResponse.role( roleToRoleResponse( user.getRole() ) );
+        userResponse.urlImage( user.getUrlImage() );
         userResponse.status( user.getStatus() );
 
         return userResponse.build();

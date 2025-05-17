@@ -29,9 +29,9 @@ public class PrivateChatsService {
         return chatMapper.toPrivateChatsResponse(chat);
     }
 
-    public List<PrivateChatsResponse> getAll(int status) {
-        var chat = chatRepository.findByStt(status);
-        return chat.stream().map(chatMapper::toPrivateChatsResponse).toList();
+    public PrivateChatsResponse getByChatId(long chatId) {
+        return chatMapper.toPrivateChatsResponse(chatRepository.findById(chatId)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED)));
     }
 
 //    public List<PrivateChatsResponse> searchAll(String name, int pageNumber, int pageSize, int status) {
@@ -53,9 +53,9 @@ public class PrivateChatsService {
 //                .build();
 //    }
 
-    public PrivateChatsResponse get(long id) {
-        return chatMapper.toPrivateChatsResponse(chatRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED)));
+    public List<PrivateChatsResponse> get(String idUser, int status) {
+        var chat = chatRepository.findByUserId(idUser, status);
+        return chat.stream().map(chatMapper::toPrivateChatsResponse).toList();
     }
 
     public PrivateChatsResponse update(PrivateChatsRequest request, long id) {

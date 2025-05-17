@@ -23,6 +23,8 @@ public class User {
 	@JsonIgnore
 	String password;
 
+	String urlImage;
+
 	int status;
 
 	@OneToOne
