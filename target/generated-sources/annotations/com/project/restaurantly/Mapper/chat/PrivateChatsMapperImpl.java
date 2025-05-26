@@ -54,6 +54,7 @@ public class PrivateChatsMapperImpl implements PrivateChatsMapper {
 
         chat.setCreatedAt( request.getCreatedAt() );
         chat.setUpdatedAt( request.getUpdatedAt() );
+        chat.setPinned( request.isPinned() );
         chat.setStatus( request.getStatus() );
     }
 }
