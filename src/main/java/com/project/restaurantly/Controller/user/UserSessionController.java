@@ -1,18 +1,14 @@
 package com.project.restaurantly.Controller.user;
 
-import com.project.restaurantly.Service.user.EmployeeService;
 import com.project.restaurantly.Service.user.UserSessionService;
 import com.project.restaurantly.dto.request.user.UserSessionRequest;
-import com.project.restaurantly.dto.request.user.employee.EmployeeRequest;
 import com.project.restaurantly.dto.response.ApiResponse;
-import com.project.restaurantly.dto.response.user.EmployeeRespone;
 import com.project.restaurantly.dto.response.user.UserSessionResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +31,7 @@ public class UserSessionController {
 
 //	@PreAuthorize("@requiredPermission.checkPermission('USER_VIEW')")
 	@GetMapping
-	ApiResponse<List<UserSessionResponse>> getAll(@RequestParam("pageNumber") int pageNumber) {
+	ApiResponse<List<UserSessionResponse>> getAll() {
 		return ApiResponse.<List<UserSessionResponse>>builder()
 				.result(sessionService.getAll())
 				.build();

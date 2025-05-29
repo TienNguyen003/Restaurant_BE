@@ -15,23 +15,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ChatMessages {
+public class MessagesRead {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    long messageId;
+
     long chatId;
 
-    String senderId;
-
-    String messageText;
-
-    LocalDateTime sentAt;
-
-    LocalDateTime updatedAt;
-
-    // 0 is private chat, 1 is group chat
     int chatType;
 
-    int status;
+    String userId;
+
+    LocalDateTime read_at;
+
+    // 0 is send, 1 is received, 2 is seen
+    int isRead;
 }

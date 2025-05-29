@@ -47,7 +47,6 @@ public class ChatMessagesMapperImpl implements ChatMessagesMapper {
         chatMessagesResponse.sentAt( chat.getSentAt() );
         chatMessagesResponse.updatedAt( chat.getUpdatedAt() );
         chatMessagesResponse.chatType( chat.getChatType() );
-        chatMessagesResponse.isRead( chat.getIsRead() );
         chatMessagesResponse.status( chat.getStatus() );
 
         return chatMessagesResponse.build();

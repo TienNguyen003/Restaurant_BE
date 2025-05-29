@@ -10,20 +10,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ChatMessagesResponse {
+public class MessagesReadResponse {
     long id;
 
     long chatId;
 
-    String senderId;
-
-    String messageText;
-
-    LocalDateTime sentAt;
-
-    LocalDateTime updatedAt;
+    long messageId;
 
     int chatType;
 
-    int status;
+    String userId;
+
+    LocalDateTime read_at;
+
+    // 0 is send, 1 is received, 2 is seen
+    int isRead;
 }

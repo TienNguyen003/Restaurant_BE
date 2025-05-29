@@ -5,6 +5,7 @@ import com.project.restaurantly.Exception.AppException;
 import com.project.restaurantly.Exception.ErrorCode;
 import com.project.restaurantly.Mapper.chat.ChatMessagesMapper;
 import com.project.restaurantly.dto.request.chat.ChatMessagesRequest;
+import com.project.restaurantly.dto.request.chat.MessagesReadRequest;
 import com.project.restaurantly.dto.response.chat.ChatMessagesResponse;
 import com.project.restaurantly.dto.response.chat.PrivateChatsResponse;
 import com.project.restaurantly.repository.chat.ChatMessagesRepository;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,7 @@ public class ChatMessagesService {
     ChatMessagesRepository chatRepository;
     UserSessionRepository userSessionRepository;
     PrivateChatsService privateChatsService;
+    MessagesReadService messagesReadService;
     ChatMessagesMapper chatMapper;
 
     public ChatMessagesResponse create(ChatMessagesRequest request) {
@@ -37,9 +40,18 @@ public class ChatMessagesService {
         boolean isReceiverOnline = userSessionRepository.findByUserId(receiverId) != null
                 && userSessionRepository.findByUserId(receiverId).getIsLoggedIn() == 1;
 
-        chat.setIsRead(isReceiverOnline ? 1 : 0);
-
         chatRepository.save(chat);
+
+        MessagesReadRequest messagesRead = new MessagesReadRequest();
+        messagesRead.setChatId(chat.getChatId());
+        messagesRead.setChatType(0);
+        messagesRead.setIsRead(isReceiverOnline ? 1 : 0);
+        messagesRead.setRead_at(LocalDateTime.now());
+        messagesRead.setUserId(receiverId);
+        messagesRead.setMessageId(chat.getId());
+
+        messagesReadService.create(messagesRead);
+
         return chatMapper.toChatMessagesResponse(chat);
     }
 
