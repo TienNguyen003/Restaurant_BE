@@ -26,7 +26,10 @@ public class UserChatMetaMapperImpl implements UserChatMetaMapper {
         userChatMeta.lastSeenAt( request.getLastSeenAt() );
         userChatMeta.leftAt( request.getLeftAt() );
         userChatMeta.deletedAt( request.getDeletedAt() );
+        userChatMeta.lastTimeMessage( request.getLastTimeMessage() );
+        userChatMeta.unreadCount( request.getUnreadCount() );
         userChatMeta.chatType( request.getChatType() );
+        userChatMeta.isMuted( request.getIsMuted() );
 
         return userChatMeta.build();
     }
@@ -45,7 +48,10 @@ public class UserChatMetaMapperImpl implements UserChatMetaMapper {
         userChatMetaResponse.lastSeenAt( chat.getLastSeenAt() );
         userChatMetaResponse.leftAt( chat.getLeftAt() );
         userChatMetaResponse.deletedAt( chat.getDeletedAt() );
+        userChatMetaResponse.lastTimeMessage( chat.getLastTimeMessage() );
+        userChatMetaResponse.unreadCount( chat.getUnreadCount() );
         userChatMetaResponse.chatType( chat.getChatType() );
+        userChatMetaResponse.isMuted( chat.getIsMuted() );
 
         return userChatMetaResponse.build();
     }
@@ -61,7 +67,9 @@ public class UserChatMetaMapperImpl implements UserChatMetaMapper {
         chat.setLastSeenAt( request.getLastSeenAt() );
         chat.setLeftAt( request.getLeftAt() );
         chat.setDeletedAt( request.getDeletedAt() );
+        chat.setLastTimeMessage( request.getLastTimeMessage() );
+        chat.setUnreadCount( request.getUnreadCount() );
         chat.setChatType( request.getChatType() );
-        chat.setMuted( request.isMuted() );
+        chat.setIsMuted( request.getIsMuted() );
     }
 }

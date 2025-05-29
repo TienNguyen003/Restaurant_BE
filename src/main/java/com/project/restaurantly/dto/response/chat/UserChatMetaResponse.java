@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class UserChatMetaResponse {
     long id;
 
-    long userId;
+    String userId;
 
     long chatId;
 
@@ -23,7 +23,11 @@ public class UserChatMetaResponse {
 
     LocalDateTime deletedAt;
 
+    LocalDateTime lastTimeMessage;
+
+    int unreadCount;
+
     int chatType;
 
-    boolean isMuted;
+    int isMuted;
 }

@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +23,17 @@ public class UserChatMetaService {
     UserChatMetaMapper metaMapper;
 
     public UserChatMetaResponse create(UserChatMetaRequest request) {
-        UserChatMeta meta = metaMapper.toUserChatMeta(request);
+        UserChatMeta chatMeta = metaRepository.findByChatIdAndUserId(request.getChatId(), request.getUserId());
 
-        metaRepository.save(meta);
+        if (chatMeta == null) {
+            chatMeta = metaMapper.toUserChatMeta(request);
+        } else {
+            chatMeta.setUnreadCount(chatMeta.getUnreadCount() + 1);
+        }
 
-        return metaMapper.toUserChatMetaResponse(meta);
+        metaRepository.save(chatMeta);
+
+        return metaMapper.toUserChatMetaResponse(chatMeta);
     }
 
     public List<UserChatMetaResponse> getAll() {
@@ -52,9 +59,8 @@ public class UserChatMetaService {
 //                .build();
 //    }
 
-    public UserChatMetaResponse get(long id) {
-        return metaMapper.toUserChatMetaResponse(metaRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED)));
+    public List<UserChatMetaResponse> get(long chatId, String userId, int chatType) {
+        return metaRepository.findByChatId(chatId, userId, chatType).stream().map(metaMapper::toUserChatMetaResponse).collect(Collectors.toList());
     }
 
     public UserChatMetaResponse update(UserChatMetaRequest request, long id) {

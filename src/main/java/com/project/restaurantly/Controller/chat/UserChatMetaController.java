@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,15 @@ import java.util.List;
 @Slf4j
 public class UserChatMetaController {
     UserChatMetaService metaService;
+    SimpMessagingTemplate messagingTemplate;
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_ADD')")
     @PostMapping
-    ApiResponse<UserChatMetaResponse> create(@RequestBody @Valid UserChatMetaRequest request) {
-        return ApiResponse.<UserChatMetaResponse>builder()
-                .result(metaService.create(request))
+    ApiResponse<String> create(@RequestBody @Valid UserChatMetaRequest request) {
+        metaService.create(request);
+        messagingTemplate.convertAndSend("/topic/chat-meta", "tien");
+        return ApiResponse.<String>builder()
+                .result("Create success")
                 .build();
     }
 
@@ -38,17 +42,19 @@ public class UserChatMetaController {
     }
 
     @GetMapping("/by")
-    ApiResponse<UserChatMetaResponse> getMenu(@RequestParam(name = "id", required = false) long id) {
-        return ApiResponse.<UserChatMetaResponse>builder()
-                .result(metaService.get(id))
+    ApiResponse<List<UserChatMetaResponse>> getMenu(@RequestParam long chatId, @RequestParam String userId, @RequestParam int chatType) {
+        return ApiResponse.<List<UserChatMetaResponse>>builder()
+                .result(metaService.get(chatId, userId, chatType))
                 .build();
     }
 
     //    @PreAuthorize("@requiredPermission.checkPermission('PERM_EDIT')")
     @PutMapping()
-    ApiResponse<UserChatMetaResponse> updateMenu(@RequestBody @Valid UserChatMetaRequest request, @RequestParam long id) {
-        return ApiResponse.<UserChatMetaResponse>builder()
-                .result(metaService.update(request, id))
+    ApiResponse<String> updateChatMeta(@RequestBody @Valid UserChatMetaRequest request, @RequestParam long id) {
+        metaService.update(request, id);
+        messagingTemplate.convertAndSend("/topic/chat-meta", "tien");
+        return ApiResponse.<String>builder()
+                .result("Update success")
                 .build();
     }
 

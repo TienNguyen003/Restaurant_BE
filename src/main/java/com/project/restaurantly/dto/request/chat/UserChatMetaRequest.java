@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserChatMetaRequest {
-    long userId;
+    String userId;
 
     long chatId;
 
@@ -21,7 +21,11 @@ public class UserChatMetaRequest {
 
     LocalDateTime deletedAt;
 
+    LocalDateTime lastTimeMessage;
+
+    int unreadCount;
+
     int chatType;
 
-    boolean isMuted;
+    int isMuted;
 }

@@ -20,7 +20,7 @@ public class UserChatMeta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    long userId;
+    String userId;
 
     long chatId;
 
@@ -30,7 +30,11 @@ public class UserChatMeta {
 
     LocalDateTime deletedAt;
 
+    LocalDateTime lastTimeMessage;
+
+    int unreadCount;
+
     int chatType;
 
-    boolean isMuted;
+    int isMuted;
 }
