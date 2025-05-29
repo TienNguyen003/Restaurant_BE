@@ -32,6 +32,7 @@ public class ChatFiles {
 
     String uploadedBy;
 
+    // 0 is private chat, 1 is group chat
     int chatType;
 
     int status;

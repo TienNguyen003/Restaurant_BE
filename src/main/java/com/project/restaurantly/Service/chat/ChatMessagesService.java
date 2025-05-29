@@ -6,7 +6,9 @@ import com.project.restaurantly.Exception.ErrorCode;
 import com.project.restaurantly.Mapper.chat.ChatMessagesMapper;
 import com.project.restaurantly.dto.request.chat.ChatMessagesRequest;
 import com.project.restaurantly.dto.response.chat.ChatMessagesResponse;
+import com.project.restaurantly.dto.response.chat.PrivateChatsResponse;
 import com.project.restaurantly.repository.chat.ChatMessagesRepository;
+import com.project.restaurantly.repository.user.UserSessionRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,15 +22,27 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ChatMessagesService {
     ChatMessagesRepository chatRepository;
+    UserSessionRepository userSessionRepository;
+    PrivateChatsService privateChatsService;
     ChatMessagesMapper chatMapper;
 
     public ChatMessagesResponse create(ChatMessagesRequest request) {
         ChatMessages chat = chatMapper.toChatMessages(request);
+        PrivateChatsResponse privateChats = privateChatsService.getByChatId(request.getChatId());
+
+        String receiverId = request.getSenderId().equals(privateChats.getUserTwoId().getId())
+                ? privateChats.getUserOneId().getId()
+                : privateChats.getUserTwoId().getId();
+
+        boolean isReceiverOnline = userSessionRepository.findByUserId(receiverId) != null
+                && userSessionRepository.findByUserId(receiverId).getIsLoggedIn() == 1;
+
+        chat.setIsRead(isReceiverOnline ? 1 : 0);
 
         chatRepository.save(chat);
-
         return chatMapper.toChatMessagesResponse(chat);
     }
+
 
     public List<ChatMessagesResponse> getAll(int status) {
         var permission = chatRepository.findByStt(status);

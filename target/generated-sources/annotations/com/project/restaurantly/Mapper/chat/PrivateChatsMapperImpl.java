@@ -23,6 +23,7 @@ public class PrivateChatsMapperImpl implements PrivateChatsMapper {
 
         privateChats.createdAt( request.getCreatedAt() );
         privateChats.updatedAt( request.getUpdatedAt() );
+        privateChats.isPinned( request.getIsPinned() );
         privateChats.status( request.getStatus() );
 
         return privateChats.build();
@@ -41,6 +42,7 @@ public class PrivateChatsMapperImpl implements PrivateChatsMapper {
         privateChatsResponse.userTwoId( chat.getUserTwoId() );
         privateChatsResponse.createdAt( chat.getCreatedAt() );
         privateChatsResponse.updatedAt( chat.getUpdatedAt() );
+        privateChatsResponse.isPinned( chat.getIsPinned() );
         privateChatsResponse.status( chat.getStatus() );
 
         return privateChatsResponse.build();
@@ -54,7 +56,7 @@ public class PrivateChatsMapperImpl implements PrivateChatsMapper {
 
         chat.setCreatedAt( request.getCreatedAt() );
         chat.setUpdatedAt( request.getUpdatedAt() );
-        chat.setPinned( request.isPinned() );
+        chat.setIsPinned( request.getIsPinned() );
         chat.setStatus( request.getStatus() );
     }
 }

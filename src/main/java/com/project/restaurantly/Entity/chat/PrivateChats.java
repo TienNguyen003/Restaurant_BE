@@ -28,7 +28,8 @@ public class PrivateChats {
 
     LocalDateTime updatedAt;
 
-    boolean isPinned;
+    // 0 not pinned, 1 pinned
+    int isPinned;
 
     int status;
 }

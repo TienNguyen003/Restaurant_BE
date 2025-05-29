@@ -22,7 +22,7 @@ public class PrivateChatsResponse {
 
     LocalDateTime updatedAt;
 
-    boolean isPinned;
+    int isPinned;
 
     int status;
 }

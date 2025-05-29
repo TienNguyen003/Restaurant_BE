@@ -19,7 +19,7 @@ public class PrivateChatsRequest {
 
     LocalDateTime updatedAt;
 
-    boolean isPinned = false;
+    int isPinned = 0;
 
     int status = 1;
 }

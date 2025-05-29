@@ -36,5 +36,6 @@ public class UserChatMeta {
 
     int chatType;
 
+    // 0 not muted, 1 muted
     int isMuted;
 }

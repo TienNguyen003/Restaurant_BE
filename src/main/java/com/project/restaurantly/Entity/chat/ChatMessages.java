@@ -30,7 +30,11 @@ public class ChatMessages {
 
     LocalDateTime updatedAt;
 
+    // 0 is private chat, 1 is group chat
     int chatType;
+
+    // 0 is send, 1 is received, 2 is seen
+    int isRead;
 
     int status;
 }

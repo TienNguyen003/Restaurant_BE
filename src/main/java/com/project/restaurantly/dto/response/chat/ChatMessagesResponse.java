@@ -25,5 +25,7 @@ public class ChatMessagesResponse {
 
     int chatType;
 
+    int isRead;
+
     int status;
 }
