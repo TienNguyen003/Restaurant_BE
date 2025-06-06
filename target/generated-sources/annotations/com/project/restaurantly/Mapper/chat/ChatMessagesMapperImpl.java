@@ -27,6 +27,9 @@ public class ChatMessagesMapperImpl implements ChatMessagesMapper {
         chatMessages.sentAt( request.getSentAt() );
         chatMessages.updatedAt( request.getUpdatedAt() );
         chatMessages.chatType( request.getChatType() );
+        chatMessages.type( request.getType() );
+        chatMessages.isForward( request.getIsForward() );
+        chatMessages.receiver_id( request.getReceiver_id() );
         chatMessages.status( request.getStatus() );
 
         return chatMessages.build();
@@ -47,6 +50,9 @@ public class ChatMessagesMapperImpl implements ChatMessagesMapper {
         chatMessagesResponse.sentAt( chat.getSentAt() );
         chatMessagesResponse.updatedAt( chat.getUpdatedAt() );
         chatMessagesResponse.chatType( chat.getChatType() );
+        chatMessagesResponse.type( chat.getType() );
+        chatMessagesResponse.isForward( chat.getIsForward() );
+        chatMessagesResponse.receiver_id( chat.getReceiver_id() );
         chatMessagesResponse.status( chat.getStatus() );
 
         return chatMessagesResponse.build();
@@ -64,6 +70,9 @@ public class ChatMessagesMapperImpl implements ChatMessagesMapper {
         chat.setSentAt( request.getSentAt() );
         chat.setUpdatedAt( request.getUpdatedAt() );
         chat.setChatType( request.getChatType() );
+        chat.setType( request.getType() );
+        chat.setIsForward( request.getIsForward() );
+        chat.setReceiver_id( request.getReceiver_id() );
         chat.setStatus( request.getStatus() );
     }
 }

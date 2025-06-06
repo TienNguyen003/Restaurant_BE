@@ -28,7 +28,11 @@ public class UserChatMetaService {
         if (chatMeta == null) {
             chatMeta = metaMapper.toUserChatMeta(request);
         } else {
-            chatMeta.setUnreadCount(chatMeta.getUnreadCount() + 1);
+            if(request.getLastSeenAt() != null) chatMeta.setLastSeenAt(request.getLastSeenAt());
+            else {
+                chatMeta.setLastTimeMessage(request.getLastTimeMessage());
+                chatMeta.setUnreadCount(chatMeta.getUnreadCount() + 1);
+            }
         }
 
         metaRepository.save(chatMeta);

@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,11 +22,14 @@ import java.util.List;
 @Slf4j
 public class MessagesReadController {
     MessagesReadService readService;
+    SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/get")
     ApiResponse<String> updateRead(@RequestParam long chatId, @RequestParam int chatType, @RequestParam String userId) {
+        readService.updateRead(chatId, chatType, userId);
+        messagingTemplate.convertAndSend("/topic/message-read", "tien");
         return ApiResponse.<String>builder()
-                .result(readService.updateRead(chatId, chatType, userId))
+                .result("Update Success")
                 .build();
     }
 

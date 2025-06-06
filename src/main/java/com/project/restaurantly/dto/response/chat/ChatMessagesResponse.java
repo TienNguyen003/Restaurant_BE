@@ -25,5 +25,11 @@ public class ChatMessagesResponse {
 
     int chatType;
 
+    int type;
+
+    int isForward;
+
+    long receiver_id;
+
     int status;
 }

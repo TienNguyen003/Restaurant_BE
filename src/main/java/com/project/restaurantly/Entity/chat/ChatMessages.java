@@ -33,5 +33,13 @@ public class ChatMessages {
     // 0 is private chat, 1 is group chat
     int chatType;
 
+    // 0 is text, 1 is image/gif, 2 is links
+    int type;
+
+    // 1 is reply, 2 is forward
+    int isForward;
+
+    long receiver_id;
+
     int status;
 }

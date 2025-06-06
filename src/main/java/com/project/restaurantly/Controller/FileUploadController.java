@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("${api.prefix}files")
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -23,9 +24,9 @@ public class FileUploadController {
     CloudinaryService cloudinaryService;
 
     @PostMapping("/upload")
-    public ApiResponse<String> uploadImage(@RequestParam("file") MultipartFile file,
-                                      @RequestParam("folder") String folderName) throws IOException {
-        return ApiResponse.<String>builder()
+    public ApiResponse<List<String>> uploadImage(@RequestParam("file") MultipartFile[] file,
+                                                 @RequestParam("folder") String folderName) throws IOException {
+        return ApiResponse.<List<String>>builder()
                 .result(cloudinaryService.uploadFile(file, folderName))
                 .build();
     }

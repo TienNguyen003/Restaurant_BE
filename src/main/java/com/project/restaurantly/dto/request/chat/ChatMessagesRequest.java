@@ -23,5 +23,11 @@ public class ChatMessagesRequest {
 
     int chatType;
 
+    int type;
+
+    int isForward;
+
+    long receiver_id;
+
     int status = 1;
 }
