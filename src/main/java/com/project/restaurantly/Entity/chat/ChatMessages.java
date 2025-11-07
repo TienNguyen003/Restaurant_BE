@@ -39,7 +39,11 @@ public class ChatMessages {
     // 1 is reply, 2 is forward
     int isForward;
 
+    // id tin nhan goc
     long receiver_id;
+
+    // 0 is not pin, 1 is pin
+    int isPined;
 
     int status;
 }

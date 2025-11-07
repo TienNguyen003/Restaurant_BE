@@ -29,5 +29,7 @@ public class ChatMessagesRequest {
 
     long receiver_id;
 
+    int isPined;
+
     int status = 1;
 }

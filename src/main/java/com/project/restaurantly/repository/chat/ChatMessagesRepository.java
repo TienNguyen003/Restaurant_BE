@@ -15,10 +15,17 @@ public interface ChatMessagesRepository extends JpaRepository<ChatMessages, Long
             "(:chatId IS NULL OR r.chatId = :chatId) AND" +
             "(:status IS NULL OR r.status = :status)")
     List<ChatMessages> findBySenderId
-            (int status, long chatId);
+            (String status, long chatId);
 
     @Query("SELECT r FROM ChatMessages r WHERE" +
             "(:status IS NULL OR r.status = :status)")
     List<ChatMessages> findByStt
             (int status);
+
+    @Query("SELECT count(r) FROM ChatMessages r WHERE" +
+            "(:chatId IS NULL OR r.chatId = :chatId) AND" +
+            "(:isPined IS NULL OR r.isPined = :isPined) AND" +
+            "(:status IS NULL OR r.status = :status)")
+    int countMessageIsPin
+            (long chatId, int status, int isPined);
 }

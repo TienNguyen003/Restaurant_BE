@@ -61,34 +61,26 @@ public class ChatMessagesService {
         return permission.stream().map(chatMapper::toChatMessagesResponse).toList();
     }
 
-//    public List<ChatMessagesResponse> searchAll(String name, int pageNumber, int pageSize, int status) {
-//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-//        return chatRepository.findByName(name, pageable, status)
-//                .stream()
-//                .map(chatMapper::toMenuRespone)
-//                .toList();
-//    }
-//
-//    public PageCustom getPagination(int pageNumber, int size, String name, int status) {
-//        Pageable pageable = PageRequest.of(pageNumber - 1, size);
-//        Page<Menu> page = chatRepository.findByName(name, pageable, status);
-//        return PageCustom.builder()
-//                .totalPages(String.valueOf(page.getTotalPages()))
-//                .totalItems(String.valueOf(page.getTotalElements()))
-//                .totalItemsPerPage(String.valueOf(page.getNumberOfElements()))
-//                .currentPage(String.valueOf(pageNumber))
-//                .build();
-//    }
-
-    public List<ChatMessagesResponse> get(int status, long chatId) {
+    public List<ChatMessagesResponse> get(String status, long chatId) {
         return chatRepository.findBySenderId(status, chatId).stream().map(chatMapper::toChatMessagesResponse).collect(Collectors.toList());
     }
 
-    public ChatMessagesResponse update(ChatMessagesRequest request, long id) {
+    public String updatePinned(long chatId, int status, long id, int type) {
+        int count = chatRepository.countMessageIsPin(chatId, status, type);
+        if(count == 3 && type != 0) return "Chỉ được ghim tối đa 3 tin nhắn";
+        ChatMessages chatMessages = chatRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
+        chatMessages.setIsPined(type);
+        chatRepository.save(chatMessages);
+        return "Success";
+    }
+
+    public ChatMessagesResponse update(String messageText, long id) {
         ChatMessages chat = chatRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.MENU_NOT_EXISTED));
 
-        chatMapper.updateChatMessages(chat, request);
+        chat.setMessageText(messageText);
+        chat.setStatus(2);
 
         return chatMapper.toChatMessagesResponse(chatRepository.save(chat));
     }

@@ -31,5 +31,7 @@ public class ChatMessagesResponse {
 
     long receiver_id;
 
+    int isPined;
+
     int status;
 }
